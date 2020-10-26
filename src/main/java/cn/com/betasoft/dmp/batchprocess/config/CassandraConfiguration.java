@@ -1,5 +1,6 @@
 package cn.com.betasoft.dmp.batchprocess.config;
 
+import cn.com.betasoft.dmp.batchprocess.infra.repository.cassandra.ExtendedReactiveCassandraRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -9,12 +10,14 @@ import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecif
 import org.springframework.data.cassandra.core.cql.keyspace.KeyspaceOption;
 import org.springframework.data.cassandra.core.cql.session.init.KeyspacePopulator;
 import org.springframework.data.cassandra.core.cql.session.init.ResourceKeyspacePopulator;
+import org.springframework.data.cassandra.repository.config.EnableReactiveCassandraRepositories;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 @Slf4j
+@EnableReactiveCassandraRepositories(basePackages = {"cn.com.betasoft.dmp.batchprocess.infra.repository.cassandra"}, repositoryBaseClass = ExtendedReactiveCassandraRepositoryImpl.class)
 public class CassandraConfiguration extends AbstractReactiveCassandraConfiguration {
 
     @Value("${spring.data.cassandra.contact-points}")

@@ -15,6 +15,7 @@ import java.time.LocalTime;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @PrimaryKeyClass
 public class DataPointKey implements Serializable {
