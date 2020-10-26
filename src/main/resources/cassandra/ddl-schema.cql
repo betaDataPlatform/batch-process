@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS dmp.data_point(
    metric text,
+   source_id text,
    day date,
    offset time,
    tags map<text, text>,

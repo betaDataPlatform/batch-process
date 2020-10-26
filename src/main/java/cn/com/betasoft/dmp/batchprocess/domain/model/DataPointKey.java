@@ -14,7 +14,6 @@ import java.time.LocalTime;
 @Getter
 @EqualsAndHashCode
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @PrimaryKeyClass
@@ -23,9 +22,12 @@ public class DataPointKey implements Serializable {
     @PrimaryKeyColumn(name = "metric", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private String metric;
 
-    @PrimaryKeyColumn(name = "day", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
+    @PrimaryKeyColumn(name = "source_id", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
+    private String sourceId;
+
+    @PrimaryKeyColumn(name = "day", ordinal = 2, type = PrimaryKeyType.PARTITIONED)
     private LocalDate day;
 
-    @PrimaryKeyColumn(name = "offset", ordinal = 2, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
+    @PrimaryKeyColumn(name = "offset", ordinal = 3, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private LocalTime offset;
 }

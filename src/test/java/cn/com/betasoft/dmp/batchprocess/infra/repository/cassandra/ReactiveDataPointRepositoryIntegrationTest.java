@@ -25,12 +25,13 @@ public class ReactiveDataPointRepositoryIntegrationTest {
     public void testAddDataPoint() {
         DataPointKey dataPointKey = DataPointKey.builder()
                 .metric("Windows:CPU_LOAD")
+                .sourceId("1123344")
                 .day(LocalDate.now())
                 .offset(LocalTime.now())
                 .build();
         Map<String, String> tags = Stream.of(new String[][]{
                 {"moc", "Windows"},
-                {"mo", "windows:uuid=1123344,domain=defaultEngine"}
+                {"mo", "Windows:uuid=1123344,domain=defaultEngine"}
         }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
         DataPoint dataPoint = DataPoint.builder()
                 .dataPointKey(dataPointKey)

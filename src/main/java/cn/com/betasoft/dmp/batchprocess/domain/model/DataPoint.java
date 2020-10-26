@@ -11,7 +11,6 @@ import java.util.Map;
 
 @Setter
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Builder
