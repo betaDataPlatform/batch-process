@@ -1,0 +1,14 @@
+version: '3'
+services:
+  cassandra-1:
+    image: cassandra
+    container_name: cassandra-1
+    volumes:
+      - ./cassandra.yaml:/var/lib/cassandra/conf/cassandra.yaml
+      - /Users/chenhao/Documents/docker-cassandra/data:/var/lib/cassandra
+    environment:
+      - CASSANDRA_BROADCAST_ADDRESS=cassandra-1
+    ports:
+      - "7000:7000"
+      - "9042:9042"
+    restart: always 
