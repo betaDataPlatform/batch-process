@@ -11,4 +11,4 @@ AND default_time_to_live = 31536000
 AND memtable_flush_period_in_ms = 600
 AND compaction = {'compaction_window_size': '14', 'compaction_window_unit': 'DAYS', 'class': 'org.apache.cassandra.db.compaction.TimeWindowCompactionStrategy'};
 
-
+CREATE INDEX IF NOT EXISTS tags_idx ON dmp.data_point (ENTRIES(tags));
