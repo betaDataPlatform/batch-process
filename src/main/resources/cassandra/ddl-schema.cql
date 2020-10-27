@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS dmp.data_point(
    offset time,
    tags map<text, text>,
    value double,
-   PRIMARY KEY((metric, day), offset)
+   PRIMARY KEY((metric, source_id, day), offset)
 )
 WITH gc_grace_seconds = 0
 AND default_time_to_live = 31536000
