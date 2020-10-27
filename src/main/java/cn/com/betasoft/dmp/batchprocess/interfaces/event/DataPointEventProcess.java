@@ -37,6 +37,7 @@ public class DataPointEventProcess {
             ConfigurableApplicationContext context = (ConfigurableApplicationContext) applicationContext;
             // void onApplicationEvent(E event);
             context.addApplicationListener((ApplicationListener<DataPointEvent>) dataPointEvent -> {
+                log.info("event source: " + Thread.currentThread().getName());
                 fluxSink.next(dataPointEvent);
             });
         });
@@ -47,9 +48,9 @@ public class DataPointEventProcess {
                 },
                 BufferOverflowStrategy.DROP_OLDEST)
                 .publishOn(Schedulers.newParallel("dataPointSave", 2))
-                .flatMap(dataPointEvent -> dataPointCommandService.saveDataPoint(dataPointEvent.getDataPoint()));
-
-        bridge.subscribe();
+                .doOnEach(dataPointEvent -> log.info("map: " + Thread.currentThread().getName()))
+                .flatMap(dataPointEvent -> dataPointCommandService.saveDataPoint(dataPointEvent.getDataPoint()))
+                .subscribe();
     }
 
 }
