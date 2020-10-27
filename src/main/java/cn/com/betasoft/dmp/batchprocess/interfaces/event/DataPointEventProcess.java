@@ -2,7 +2,6 @@ package cn.com.betasoft.dmp.batchprocess.interfaces.event;
 
 import cn.com.betasoft.dmp.batchprocess.application.internal.commandservices.DataPointCommandService;
 import cn.com.betasoft.dmp.batchprocess.domain.event.DataPointEvent;
-import cn.com.betasoft.dmp.batchprocess.domain.model.DataPoint;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -41,17 +40,16 @@ public class DataPointEventProcess {
                 fluxSink.next(dataPointEvent);
             });
         });
-        processPipe(bridge).subscribe();
-    }
-
-    private Flux<DataPoint> processPipe(Flux<DataPointEvent> bridge) {
         // -Dreactor.bufferSize.small=20 设置队列的长度，默认256
         // maxSize不是队列的长度，是reactor把数据发送给下游前缓存的数据量
-        return bridge.onBackpressureBuffer(dataPointBufferSize, dataPointEvent -> {
+        bridge.onBackpressureBuffer(dataPointBufferSize, dataPointEvent -> {
                     log.info("discard dataPoint: {}.", dataPointEvent.getDataPoint());
                 },
                 BufferOverflowStrategy.DROP_OLDEST)
                 .publishOn(Schedulers.newParallel("dataPointSave", 2))
                 .flatMap(dataPointEvent -> dataPointCommandService.saveDataPoint(dataPointEvent.getDataPoint()));
+
+        bridge.subscribe();
     }
+
 }

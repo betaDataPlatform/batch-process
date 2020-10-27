@@ -28,7 +28,7 @@ import java.util.Map;
  *           "mo": "Windows.domain="defaultEngine",uuid="024fb79d16e346a4bbb35dcefdd88949""
  *       },
  *       "ttl": 300
- *   },
+ *   }
  * ]
  */
 @Setter
